@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading List — Nayan Nair</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #111110;
+      --ink: #e8e6e1;
+      --ink-muted: #8a8880;
+      --ink-faint: #4a4946;
+      --accent: #d4714a;
+      --border: #242422;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Lora', Georgia, serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      min-height: 100vh;
+      padding: 0 1.5rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 4rem 0 6rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .nav-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-name:hover { color: var(--ink); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .page-header {
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.1s forwards;
+    }
+
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .page-subtitle {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-subtitle::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    section {
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.2s; }
+    section:nth-of-type(2) { animation-delay: 0.25s; }
+    section:nth-of-type(3) { animation-delay: 0.3s; }
+    section:nth-of-type(4) { animation-delay: 0.35s; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--ink-faint);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .book-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .book-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .book-item:first-child { border-top: 1px solid var(--border); }
+
+    .book-title {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .book-author {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      margin-top: 2px;
+    }
+
+    .book-status {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 300;
+      white-space: nowrap;
+      padding: 2px 7px;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+
+    .status-reading {
+      color: var(--accent);
+      border-color: var(--accent);
+      opacity: 0.8;
+    }
+
+    .status-done {
+      color: var(--ink-faint);
+      border-color: var(--ink-faint);
+      opacity: 0.7;
+    }
+
+    .status-next {
+      color: var(--ink-muted);
+      border-color: var(--border);
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.45s forwards;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-faint);
+    }
+
+    .footer-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .site-wrap { padding: 2.5rem 0 4rem; }
+      nav { margin-bottom: 3.5rem; }
+      .book-item { grid-template-columns: 1fr; gap: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-wrap">
+
+    <nav>
+      <a class="nav-name" href="index.html">← nn</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">about</a></li>
+        <li><a href="index.html#sections">sections</a></li>
+      </ul>
+    </nav>
+
+    <header class="page-header">
+      <h1 class="page-title">Reading List</h1>
+      <p class="page-subtitle">Books I'm reading, have read, and want to read</p>
+    </header>
+
+    <section>
+      <div class="section-header">
+        <span class="section-label">Currently reading</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="book-list">
+        <div class="book-item">
+          <div>
+            <span class="book-title">Add your current book here</span>
+            <span class="book-author">Author Name</span>
+          </div>
+          <span class="book-status status-reading">reading</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-label">Finished</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="book-list">
+        <div class="book-item">
+          <div>
+            <span class="book-title">Add a finished book here</span>
+            <span class="book-author">Author Name</span>
+          </div>
+          <span class="book-status status-done">done</span>
+        </div>
+        <div class="book-item">
+          <div>
+            <span class="book-title">And another one here</span>
+            <span class="book-author">Author Name</span>
+          </div>
+          <span class="book-status status-done">done</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <span class="section-label">Up next</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="book-list">
+        <div class="book-item">
+          <div>
+            <span class="book-title">A book you want to read</span>
+            <span class="book-author">Author Name</span>
+          </div>
+          <span class="book-status status-next">next</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-copy">Nayan Nair &nbsp;·&nbsp; Austin, TX</span>
+        <div class="footer-dot"></div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
