@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nayan Nair</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #111110;
+      --ink: #e8e6e1;
+      --ink-muted: #8a8880;
+      --ink-faint: #4a4946;
+      --accent: #d4714a;
+      --border: #242422;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Lora', Georgia, serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      min-height: 100vh;
+      padding: 0 1.5rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .site-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 4rem 0 6rem;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .nav-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active { color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      margin-bottom: 4.5rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.1s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 6vw, 2.75rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-role::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      margin: 1.75rem 0;
+    }
+
+    .hero-bio {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--ink-muted);
+      max-width: 480px;
+    }
+
+    .hero-bio em {
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    /* Section */
+    section {
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.2s; }
+    section:nth-of-type(2) { animation-delay: 0.3s; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--ink-faint);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* About */
+    .about-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--ink-muted);
+    }
+
+    .about-text p + p { margin-top: 1rem; }
+
+    .about-text strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* Writing */
+    .writing-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .post-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.15s;
+    }
+
+    .post-item:first-child { border-top: 1px solid var(--border); }
+    .post-item:hover { opacity: 0.65; }
+
+    .post-title {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .post-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-faint);
+      white-space: nowrap;
+    }
+
+    .post-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid currentColor;
+      border-radius: 2px;
+      padding: 1px 5px;
+      margin-left: 8px;
+      vertical-align: middle;
+      opacity: 0.7;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.4s forwards;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-faint);
+    }
+
+    .footer-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+
+    /* Animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .site-wrap { padding: 2.5rem 0 4rem; }
+      nav { margin-bottom: 3.5rem; }
+      .hero { margin-bottom: 3rem; }
+      .nav-links { gap: 1.25rem; }
+      .post-item { grid-template-columns: 1fr; gap: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-wrap">
+
+    <nav>
+      <span class="nav-name">nn</span>
+      <ul class="nav-links">
+        <li><a href="#about">about</a></li>
+        <li><a href="#writing">writing</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero">
+      <h1 class="hero-name">Nayan Nair</h1>
+      <p class="hero-role">Performance Modeling Engineer &nbsp;·&nbsp; Austin, TX</p>
+      <div class="hero-divider"></div>
+      <p class="hero-bio">
+        I work at the intersection of <em>simulation, hardware, and systems thinking</em> — building models that help teams understand how things perform before they exist in the real world. Currently based in Austin.
+      </p>
+    </header>
+
+    <section id="about">
+      <div class="section-header">
+        <span class="section-label">About</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-text">
+        <p>
+          <strong>Performance modeling</strong> sits at the edge of engineering and intuition — you're trying to reason about systems that don't yet exist, using tools that are always one step behind the hardware they model. It's a discipline that rewards patience and careful thinking.
+        </p>
+        <p>
+          Outside of work, I'm interested in the craft of technical writing, how complex ideas get communicated clearly, and the occasional deep dive into topics far outside my field.
+        </p>
+        <p>
+          This site is a place to think out loud. Update this section with whatever you'd like the world to know about you.
+        </p>
+      </div>
+    </section>
+
+    <section id="writing">
+      <div class="section-header">
+        <span class="section-label">Writing</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="writing-list">
+        <a class="post-item" href="#">
+          <span class="post-title">What performance modeling actually is <span class="post-tag">draft</span></span>
+          <span class="post-date">2025</span>
+        </a>
+        <a class="post-item" href="#">
+          <span class="post-title">Notes on building mental models for new systems</span>
+          <span class="post-date">2025</span>
+        </a>
+        <a class="post-item" href="#">
+          <span class="post-title">The gap between simulation and reality</span>
+          <span class="post-date">2024</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-copy">Nayan Nair &nbsp;·&nbsp; Austin, TX</span>
+        <div class="footer-dot"></div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
